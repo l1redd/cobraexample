@@ -2,12 +2,14 @@ package cmd
 
 import(
 	"fmt"
+	"github.com/l1redd/cobraexample/cmd/children"
 	"github.com/spf13/cobra"
 )
 
 type ParentArgs struct {
 	one int32
 	two int32
+	childArgs children.ChildArgs
 }
 
 var ParentCmd = &cobra.Command{
@@ -21,7 +23,13 @@ var ParentCmd = &cobra.Command{
 func ParentRun(cmd *cobra.Command) {
 	args := parseParentArgs(cmd)
 	fmt.Printf("What's up! \n")
-	fmt.Printf("Parent -- first: %d, second: %d \n", args.one, args.two)
+
+	if args.one != 0 && args.two != 0 {
+		fmt.Printf("Parent -- first: %d, second: %d \n", args.one, args.two)
+	}else{
+		fmt.Printf("in parent, printing child \n")
+		children.PrintTheThing(args.childArgs)
+	}
 }
 
 func parseParentArgs(cmd *cobra.Command) (args ParentArgs) {
@@ -34,9 +42,13 @@ func parseParentArgs(cmd *cobra.Command) (args ParentArgs) {
 	if err != nil {
 		return
 	}
+
+	childArgs := children.ParseChildArgs(cmd)
+
 	return ParentArgs{
 		one: first,
 		two: second,
+		childArgs: childArgs,
 	}
 }
 
@@ -44,6 +56,5 @@ func init () {
 	ParentCmd.PersistentFlags().Int32P("one", "o", 0, "first arg")
 	ParentCmd.PersistentFlags().Int32P("two", "t", 0, "second arg")
 
-	childCmd := NewChildCmd()
-	ParentCmd.AddCommand(childCmd)
+	children.DefineFlags(ParentCmd)
 }

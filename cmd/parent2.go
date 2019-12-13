@@ -2,6 +2,7 @@ package cmd
 
 import(
 	"fmt"
+	"github.com/l1redd/cobraexample/cmd/children"
 	"github.com/spf13/cobra"
 )
 
@@ -44,6 +45,5 @@ func init () {
 	Parent2Cmd.PersistentFlags().Int32P("one", "o", 0, "first arg")
 	Parent2Cmd.PersistentFlags().Int32P("two", "t", 0, "second arg")
 
-	childCmd := NewChildCmd()
-	Parent2Cmd.AddCommand(childCmd)
+	children.DefineFlags(Parent2Cmd)
 }
