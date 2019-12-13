@@ -20,7 +20,8 @@ var ParentCmd = &cobra.Command{
 
 func ParentRun(cmd *cobra.Command) {
 	args := parseParentArgs(cmd)
-	fmt.Printf("Parent -- first: %d, second: %d", args.one, args.two)
+	fmt.Printf("What's up! \n")
+	fmt.Printf("Parent -- first: %d, second: %d \n", args.one, args.two)
 }
 
 func parseParentArgs(cmd *cobra.Command) (args ParentArgs) {
@@ -39,13 +40,10 @@ func parseParentArgs(cmd *cobra.Command) (args ParentArgs) {
 	}
 }
 
-//func Execute() error {
-//	return rootCmd.Execute()
-//}
-
 func init () {
 	ParentCmd.PersistentFlags().Int32P("one", "o", 0, "first arg")
 	ParentCmd.PersistentFlags().Int32P("two", "t", 0, "second arg")
 
-	ParentCmd.AddCommand(ChildCommand)
+	childCmd := NewChildCmd()
+	ParentCmd.AddCommand(childCmd)
 }
