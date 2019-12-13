@@ -11,7 +11,7 @@ type ChildArgs struct {
 	three int32
 	four int32
 }
-var childCommand = &cobra.Command{
+var childCmd = &cobra.Command{
 	Use:   "child",
 	Short: "Child command",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -27,7 +27,7 @@ func NewChildCmd() *cobra.Command {
 	//		ChildRun(cmd)
 	//	},
 	//}
-	return childCommand
+	return childCmd
 }
 
 func ChildRun(cmd *cobra.Command) {
@@ -78,6 +78,6 @@ func parseChildArgs(cmd *cobra.Command) (args ChildArgs) {
 }
 
 func init() {
-	childCommand.Flags().Int32P("three", "r", 0, "third arg")
-	childCommand.Flags().Int32P("four", "f", 0, "fourth arg")
+	childCmd.Flags().Int32P("three", "r", 0, "third arg")
+	childCmd.Flags().Int32P("four", "f", 0, "fourth arg")
 }

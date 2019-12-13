@@ -13,8 +13,6 @@ func main() {
 
 	rootCmd.AddCommand(cmd.ParentCmd)
 	rootCmd.AddCommand(cmd.Parent2Cmd)
-	//childCmd := cmd.NewChildCmd()
-	//rootCmd.AddCommand(childCmd)
 
 	err := rootCmd.Execute()
 	if err != nil {
