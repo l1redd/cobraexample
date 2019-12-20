@@ -10,6 +10,7 @@ type ChildArgs struct {
 	two int32
 	three int32
 	four int32
+	List []int64
 }
 var ChildCmd = &cobra.Command{
 	Use:   "child",
@@ -21,7 +22,7 @@ var ChildCmd = &cobra.Command{
 
 func ChildRun(cmd *cobra.Command) {
 	args := ParseChildArgs(cmd)
-	fmt.Print("in child, printing child \n")
+	fmt.Println("in child, printing child")
 	PrintTheThing(args)
 }
 

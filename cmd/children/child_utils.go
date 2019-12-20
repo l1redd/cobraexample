@@ -8,6 +8,8 @@ import (
 func DefineFlags(cmd *cobra.Command) {
 	cmd.Flags().Int32P("three", "r", 0, "third arg")
 	cmd.Flags().Int32P("four", "f", 0, "fourth arg")
+	val := make([]int64, 0)
+	cmd.Flags().Int64SliceP("list", "l", val, "pass in a list of ints")
 }
 
 func ParseChildArgs(cmd *cobra.Command) (args ChildArgs) {
@@ -27,9 +29,15 @@ func ParseChildArgs(cmd *cobra.Command) (args ChildArgs) {
 
 	fmt.Printf("four: %d \n", fourth)
 
+	list, err := cmd.Flags().GetInt64Slice("list")
+	if err != nil {
+		return
+	}
+
 	return ChildArgs{
 		three: third,
 		four: fourth,
+		List: list,
 	}
 }
 

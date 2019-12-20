@@ -9,6 +9,7 @@ import(
 type Parent2Args struct {
 	one int32
 	two int32
+	childArgs children.ChildArgs
 }
 
 var Parent2Cmd = &cobra.Command{
@@ -21,8 +22,14 @@ var Parent2Cmd = &cobra.Command{
 
 func Parent2Run(cmd *cobra.Command) {
 	args := parseParent2Args(cmd)
-	fmt.Printf("What's up! \n")
+	fmt.Println("What's up!")
 	fmt.Printf("Parent2 -- first: %d, second: %d \n", args.one, args.two)
+
+	childArgs := args.childArgs
+	fmt.Println("List!")
+	for _, item := range childArgs.List{
+		fmt.Println(item)
+	}
 }
 
 func parseParent2Args(cmd *cobra.Command) (args Parent2Args) {
@@ -35,9 +42,13 @@ func parseParent2Args(cmd *cobra.Command) (args Parent2Args) {
 	if err != nil {
 		return
 	}
+
+	childArgs := children.ParseChildArgs(cmd)
+
 	return Parent2Args{
 		one: first,
 		two: second,
+		childArgs: childArgs,
 	}
 }
 
